@@ -1,0 +1,13 @@
+x=10
+echo $x
+xn = Rani
+echo %xn
+expr 6 + 3
+
+x=20
+y=5
+expr $x / $y
+
+z= expr $x / $y
+echo $z
+
