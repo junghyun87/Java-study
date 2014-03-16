@@ -1,0 +1,5 @@
+intall coverage tool (in MacOS)
+pip install coverage
+
+coverage run splay_test.py ; coverage html -i
+
