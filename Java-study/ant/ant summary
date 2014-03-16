@@ -1,0 +1,75 @@
+Ant consists of tasks.
+Tasks consists of Core task, Optional task, Third party task, Custom task.
+
+Type&Property - imporant element for reusability
+Type-Sub-element of a task. ex) set classpath
+Property-make a variable. ex) <property name="dist.dir" value="dist"/>
+
+setting classpath
+#1 no sub-element
+<classpath path="${classpath}"/>
+#2 with sub-element
+<classpath>
+	<pathelement path="${classpath}">
+</classpath>
+
+path attribute delimiter : or ;, path directory delimiter / or \
+<arg path="/dir;/dir2:\dir3"/>
+
+The location attribute specifies a single file or directory relative to the project's base directory (or an absolute filename), while the path attribute accepts colon- or semicolon-separated lists of locations.
+
+How to add path in <classpath>: using pathelement, fileset, dirset, filelist, etc.
+<classpath>
+	<pathelement path="${classpath}"/>
+	<fileset dir="lib">
+		<include name="**/*.jar"/>
+	</fileset>
+	<pathelement location="classes"/>
+	<dirset dir="${build.dir}">
+		<include name="apps/**/classes"/>
+		<exclude name="apps/**/*Test*"/>
+	</dirset>
+	<filelist refid="third-party_jars"/>
+</classpath>
+
+if fileset is used, unlike pathelement, it doesnot garuntee the order.
+
+using reference example
+<path id="project.class.path">
+	<pathelement location="lib/"/>
+	<pathelement path="${java.class.path}/"/>
+</path>
+
+<target name="target1">
+	<rmic ..>
+		<classpath refid="project.class.path"/>
+	</rmic>
+</target>
+
+<target name="target2">
+	<javac ... >
+		<classpath refid="project.class.path"/>
+	</javac>
+</target>
+
+patternset example
+* first level sub directories and files
+** all levels sub directories and files
+<patternset id="test.sources">
+	<include name="**/*.java"/>
+	<exclude name="**/*Test*"/>
+</patternset>
+
+fileset and patternset example
+<fileset dir="${server.src}">
+	<patternset id="test.sources">
+		<include name="**/*.java"/>
+		<include name="**/*Test*"/>
+	</patternset>
+</fileset>
+
+<fileset dir="${client.src}">
+	<patternset refid="test.sources"/>
+</fileset>
+
+

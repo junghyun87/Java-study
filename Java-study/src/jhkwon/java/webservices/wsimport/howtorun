@@ -1,0 +1,1 @@
+wsimport -keep -verbose wsdl_file
